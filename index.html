@@ -13,7 +13,9 @@
  		<input type="submit"/>
 	</form>
 	<script>
- 		document.onload.csrfForm.submit();
+		window.onload = function(){
+  			document.forms['csrfForm'].submit();
+		}
 	</script>
 </body>
 </html> 
