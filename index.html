@@ -1,15 +1,145 @@
-<!doctype html>
-<html lang="en">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8">
- </head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Cybersecurity War Games - Insecure Cryptographic Storage Challenge Two</title>
+	<link href="../css/theCss.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
 <body>
-	<form name="csrfForm" action="https://security.codepath.com/user/csrfchallengetwo/plusplus" method="POST">
- 		<input type="hidden" name="userId" value="bec200b0f8e500e37dd1a6682ba13f443693d266" />
-		<input type="hidden" type="submit"/>
-	</form>
-	<script>
-		document.csrfForm.submit();
-	</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<div id="contentDiv">
+			<h2 class="title">Insecure Cryptographic Storage Challenge Two</h2>
+			<p> 
+				The result key has been encrypted to ensure that nobody can finish the challenge without knowing the 
+				secret key to decrypt it. The following form can be used to check if you have the correct result key.
+				</p>
+				
+				<form id="leForm" action="javascript:;">
+				<table>
+					<tr><td>
+						<input type="text" id="resultKeyAttempt" style="width: 300px;"/></>
+						<input type="submit" class='wargamesButton' value="Check Result Key"/>
+					</td></tr>
+				</table>
+				</form>
+				<br/>
+				<br/>
+				<div id="resultDiv"></div>
+			
+		</div>
+		<script>
+		function decrypt(input){
+			//2D encryption
+			var input = $("#resultKeyAttempt").val();
+			theKey = "KPOISAIJDIEYJAF";
+			var theAlphabet =   "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz";
+		
+			theKeysLength = theKey.length;
+
+			// Transform input:
+			var inputLength = input.length;
+			var output = "";
+			var theKeysCurrentIndex = 0;
+			for(i = 0; i < inputLength; i ++)
+			{
+				var currentChar = input.charAt(i);
+				var currentCharValue = theAlphabet.indexOf(currentChar);
+				//should never happen.. only if finds a bad char.
+				if(currentCharValue < 0)
+				{
+					console.log("found a bad char that wasn't in our alphabet " + currentChar);
+					output += currentChar;
+					continue;
+				}
+				var lowercase = currentCharValue >= 26 ? true : false;
+				currentCharValue -= theAlphabet.indexOf(theKey.charAt(theKeysCurrentIndex));
+				currentCharValue += 26;
+
+				if(lowercase)
+					currentCharValue = currentCharValue % 26 + 26;
+				else
+					currentCharValue = currentCharValue % 26 ;
+				console.log(currentCharValue);
+				output += theAlphabet.charAt(currentCharValue);
+				theKeysCurrentIndex =(theKeysCurrentIndex + 1) % theKeysLength;
+
+			}
+			return output;
+			
+
+		}
+		
+		$("#leForm").submit(function(){
+
+
+			//2D encryption
+			var input = $("#resultKeyAttempt").val();
+			console.log("decrypted: " + decrypt(input));
+			theKey = "kpoisaijdieyjaf";
+			var theAlphabet =   "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz";
+
+			// Validate theKey:
+			theKey = theKey.toUpperCase();
+			var theKeysLength = theKey.length;
+			var i;
+			var adjustedKey = "";
+			for(i = 0; i < theKeysLength; i ++)
+			{
+				var currentKeyChar = theAlphabet.indexOf(theKey.charAt(i));
+				if(currentKeyChar < 0)
+					continue;
+				adjustedKey += theAlphabet.charAt(currentKeyChar);
+			}
+			theKey = adjustedKey;
+			theKeysLength = theKey.length;
+
+			//makes key uppercase.
+			console.log("Adjusted Key:" + theKey);
+
+			// Transform input:
+			var inputLength = input.length;
+			var output = "";
+			var theKeysCurrentIndex = 0;
+			for(i = 0; i < inputLength; i ++)
+			{
+				var currentChar = input.charAt(i);
+				var currentCharValue = theAlphabet.indexOf(currentChar);
+				//should never happen.. only if finds a bad char.
+				if(currentCharValue < 0)
+				{
+					console.log("found a bad char that wasn't in our alphabet " + currentChar);
+					output += currentChar;
+					continue;
+				}
+				var lowercase = currentCharValue >= 26 ? true : false;
+				currentCharValue += theAlphabet.indexOf(theKey.charAt(theKeysCurrentIndex));
+				currentCharValue += 26;
+				if(lowercase)
+					currentCharValue = currentCharValue % 26 + 26;
+				else
+					currentCharValue %= 26;
+				output += theAlphabet.charAt(currentCharValue);
+				theKeysCurrentIndex =(theKeysCurrentIndex + 1) % theKeysLength;
+			}
+			
+			//Check result for validity
+			$("#resultDiv").hide("fast", function(){
+
+				if(output === "DwsDagmwhziArpmogWaSmmckwhMoEsmgmxlivpDttfjbjdxqBwxbKbCwgwgUyam")
+					$('#resultDiv').html("<p>Yeah, that's correct</p>");
+				else
+					$('#resultDiv').html("<p>No, that's not correct</p>");
+				$("#resultDiv").show("slow");
+			});
+			//Output the output variable
+			
+			$("#resultDiv").hide("fast", function(){
+					$('#resultDiv').html("Encrypted Output: " + output);
+				$("#resultDiv").show("slow");
+			});
+			
+		});
+		</script>
 </body>
-</html> 
+</html>
