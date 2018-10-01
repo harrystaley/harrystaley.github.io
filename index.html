@@ -64,7 +64,7 @@
 					continue;
 				}
 				var lowercase = currentCharValue >= 26 ? true : false;
-				currentCharValue += theAlphabet.indexOf(theKey.charAt(theKeysCurrentIndex));
+				currentCharValue -= theAlphabet.indexOf(theKey.charAt(theKeysCurrentIndex));
 				currentCharValue += 26;
 				if(lowercase)
 					currentCharValue = currentCharValue % 26 + 26;
